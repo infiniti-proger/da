@@ -2286,7 +2286,7 @@ let questIndex = 0;
 
 function getPhotoUrl(filename) {{
 
-    return "/app/static/" + filename;
+    return "app/static/" + filename;
 
 }}
 
