@@ -1,5 +1,4 @@
 import streamlit as st
-import streamlit.components.v1 as components
 import base64
 import os
 
@@ -3088,8 +3087,7 @@ document.addEventListener(
 """
 
 
-components.html(
+st.iframe(
     html,
-    height=900,
-    scrolling=False
+    height=900
 )
