@@ -1826,39 +1826,17 @@ button {{
      8. PHOTO 7
 ================================= -->
 
-<section class="scene photo-scene"
-         id="scene8">
-
+<section class="scene photo-scene" id="scene8">
     <div class="scene-inner">
-
-            <div class="photo-wrapper">
-
-<img class="photo" src="__PHOTO_7__" alt="">
-
-            </div>
-
+        <div class="photo-wrapper">
+            <img class="photo" src="__PHOTO_7__" alt="">
             <div class="photo-caption">
-
-                <div class="photo-number">
-                    07 / 10
-                </div>
-
-                <div class="photo-title">
-                    Счастье в мелочах
-                </div>
-
-                <div class="photo-text">
-                    Иногда для счастья нужно
-                    совсем немного.
-                    Просто быть рядом.
-                </div>
-
+                <div class="photo-number">07 / 10</div>
+                <div class="photo-title">Счастье в мелочах</div>
+                <div class="photo-text">Иногда для счастья нужно совсем немного. Просто быть рядом.</div>
             </div>
-
         </div>
-
     </div>
-
 </section>
 
 
