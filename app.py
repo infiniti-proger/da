@@ -1840,9 +1840,6 @@ button {{
     <div class="scene-inner">
 
         <div class="photo-wrapper">
-
-            <div class="photo-wrapper">
-
                 <img
                     class="photo"
                     data-photo="photo7.jpg"
@@ -1870,8 +1867,6 @@ button {{
             </div>
 
         </div>
-
-    </div>
 
 </section>
 
