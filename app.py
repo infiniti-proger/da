@@ -110,6 +110,22 @@ def file_to_base64(filename):
 
 
 music = file_to_base64("romantic.mp3")
+music_b64 = music
+
+photos_b64 = {}
+for i in range(1, 11):
+    for ext in ("jpg", "JPG", "jpeg", "JPEG", "png", "PNG"):
+        p = f"static/photo{i}.{ext}"
+        if os.path.exists(p):
+            with open(p, "rb") as f:
+                photos_b64[i] = base64.b64encode(f.read()).decode("utf-8")
+            break
+
+
+def ph(n):
+    if n in photos_b64:
+        return "data:image/jpeg;base64," + photos_b64[n]
+    return ""
 
 
 # =========================================
