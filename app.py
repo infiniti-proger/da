@@ -121,7 +121,7 @@ for i in range(1, 11):
                 photos_b64[i] = base64.b64encode(f.read()).decode("utf-8")
             break
 
-st.write("DEBUG keys:", list(photos_b64.keys()))
+
 def ph(n):
     if n in photos_b64:
         return "data:image/jpeg;base64," + photos_b64[n]
