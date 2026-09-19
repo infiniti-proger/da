@@ -1643,8 +1643,6 @@ button {{
 
         <div class="photo-wrapper">
 
-            <img
-                class="photo"
  <img class="photo" src="__PHOTO_2__" alt="">
 
             <div class="photo-caption">
@@ -1832,8 +1830,6 @@ button {{
          id="scene8">
 
     <div class="scene-inner">
-
-        <div class="photo-wrapper">
 
             <div class="photo-wrapper">
 
