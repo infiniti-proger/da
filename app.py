@@ -2488,26 +2488,25 @@ function toggleMusic(event) {{
 
 function openEnvelope() {{
 
-    if (envelopeOpened)
+    if (envelopeOpened) {{
         return;
+    }}
+
+    const envelope = document.getElementById("envelope");
+
+    if (!envelope) {{
+        console.error("Конверт #envelope не найден!");
+        return;
+    }}
 
     envelopeOpened = true;
 
     playMusic();
 
-    const envelope =
-        document.getElementById(
-            "envelope"
-        );
-
-    envelope.classList.add(
-        "envelope-open"
-    );
+    envelope.classList.add("envelope-open");
 
     setTimeout(() => {{
-
         setScene(1);
-
     }}, 1350);
 }}
 
@@ -2518,45 +2517,29 @@ function openEnvelope() {{
 
 function setScene(number) {{
 
-    const scenes =
-        document.querySelectorAll(
-            ".scene"
-        );
+    const scenes = document.querySelectorAll(".scene");
 
     scenes.forEach(scene => {{
-
-        scene.classList.remove(
-            "active"
-        );
-
+        scene.classList.remove("active");
     }});
 
-    const target =
-        document.getElementById(
-            "scene" + number
-        );
+    const target = document.getElementById("scene" + number);
 
-    if (!target)
+    if (!target) {{
+        console.error("Сцена не найдена: scene" + number);
         return;
+    }}
 
-    target.classList.add(
-        "active"
-    );
+    target.classList.add("active");
 
-    currentScene =
-        number;
+    currentScene = number;
 
     /*
      * Фото читается только здесь.
      */
 
-    if (
-        number >= 2 &&
-        number <= 11
-    ) {{
-
+    if (number >= 2 && number <= 11) {{
         loadPhoto(number);
-
     }}
 
     if (number === 15) {{
@@ -2571,15 +2554,8 @@ function nextScene(event) {{
         event.stopPropagation();
     }}
 
-    if (
-        currentScene >= 1 &&
-        currentScene < 14
-    ) {{
-
-        setScene(
-            currentScene + 1
-        );
-
+    if (currentScene >= 1 && currentScene < 14) {{
+        setScene(currentScene + 1);
     }}
 }}
 
