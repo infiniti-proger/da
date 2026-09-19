@@ -117,10 +117,8 @@ music = file_to_base64("romantic.mp3")
 photos = {}
 
 for i in range(1, 11):
-    filename = f"photo{i}.jpg"
-    photos[i] = file_to_base64(
-        os.path.join("static", filename)
-    )
+    filename = os.path.join("static", f"photo{i}.jpg")
+    photos[i] = file_to_base64(filename)
 
 # =========================================
 # HTML
@@ -1851,8 +1849,6 @@ button {{
 
         <div class="photo-wrapper">
 
-            <div class="photo-wrapper">
-
                 <img
                     class="photo"
                     data-photo="photo7.jpg"
@@ -2293,7 +2289,6 @@ let questIndex = 0;
  */
 
 function getPhotoData(filename) {{
-
     const photos = {{
         "photo1.jpg": "data:image/jpeg;base64,{photos[1]}",
         "photo2.jpg": "data:image/jpeg;base64,{photos[2]}",
@@ -2310,9 +2305,11 @@ function getPhotoData(filename) {{
     return photos[filename] || "";
 }}
 
+    return photos[filename] || "";
+}}
+
 
 function loadPhoto(sceneNumber) {{
-
     const scene =
         document.getElementById(
             "scene" + sceneNumber
@@ -2348,7 +2345,6 @@ function loadPhoto(sceneNumber) {{
     }}
 
     image.src = photoData;
-
     image.dataset.loaded = "1";
 
     const nextSceneNumber =
@@ -2358,21 +2354,16 @@ function loadPhoto(sceneNumber) {{
         nextSceneNumber >= 2 &&
         nextSceneNumber <= 11
     ) {{
-
         setTimeout(() => {{
-
             preloadSinglePhoto(
                 nextSceneNumber
             );
-
         }}, 300);
-
     }}
 }}
 
 
 function preloadSinglePhoto(sceneNumber) {{
-
     const scene =
         document.getElementById(
             "scene" + sceneNumber
@@ -2406,11 +2397,8 @@ function preloadSinglePhoto(sceneNumber) {{
         new Image();
 
     preload.decoding = "async";
-
-    preload.src =
-        photoData;
+    preload.src = photoData;
 }}
-
 
 /* =================================
    ВЫСОТА
