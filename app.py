@@ -132,7 +132,7 @@ def ph(n):
 # HTML
 # =========================================
 
-html = """
+html = f"""
 <!DOCTYPE html>
 <html lang="ru">
 
