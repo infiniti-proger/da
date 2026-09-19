@@ -1,5 +1,4 @@
 import streamlit as st
-import streamlit.components.v1 as components
 import base64
 import os
 
@@ -1839,39 +1838,33 @@ button {{
 
     <div class="scene-inner">
 
-        <div class="photo-wrapper">
+<div class="photo-wrapper">
 
-            <div class="photo-wrapper">
+    <img
+        class="photo"
+        data-photo="photo7.jpg"
+        alt="Наш момент"
+        decoding="async">
 
-                <img
-                    class="photo"
-                    data-photo="photo7.jpg"
-                    alt="Наш момент"
-                    decoding="async">
+    <div class="photo-caption">
 
-            </div>
+        <div class="photo-number">
+            07 / 10
+        </div>
 
-            <div class="photo-caption">
+        <div class="photo-title">
+            Счастье в мелочах
+        </div>
 
-                <div class="photo-number">
-                    07 / 10
-                </div>
-
-                <div class="photo-title">
-                    Счастье в мелочах
-                </div>
-
-                <div class="photo-text">
-                    Иногда для счастья нужно
-                    совсем немного.
-                    Просто быть рядом.
-                </div>
-
-            </div>
-
+        <div class="photo-text">
+            Иногда для счастья нужно
+            совсем немного.
+            Просто быть рядом.
         </div>
 
     </div>
+
+</div>
 
 </section>
 
@@ -2284,9 +2277,9 @@ let questIndex = 0;
  * когда нужная сцена открывается.
  */
 
-function getPhotoUrl(filename) {{
+# function getPhotoUrl(filename) {{
 
-    return "/app/static/" + filename;
+    return "/app/static/" + encodeURIComponent(filename);
 
 }}
 
@@ -2495,26 +2488,25 @@ function toggleMusic(event) {{
 
 function openEnvelope() {{
 
-    if (envelopeOpened)
+    if (envelopeOpened) {{
         return;
+    }}
+
+    const envelope = document.getElementById("envelope");
+
+    if (!envelope) {{
+        console.error("Конверт #envelope не найден!");
+        return;
+    }}
 
     envelopeOpened = true;
 
     playMusic();
 
-    const envelope =
-        document.getElementById(
-            "envelope"
-        );
-
-    envelope.classList.add(
-        "envelope-open"
-    );
+    envelope.classList.add("envelope-open");
 
     setTimeout(() => {{
-
         setScene(1);
-
     }}, 1350);
 }}
 
@@ -2525,45 +2517,29 @@ function openEnvelope() {{
 
 function setScene(number) {{
 
-    const scenes =
-        document.querySelectorAll(
-            ".scene"
-        );
+    const scenes = document.querySelectorAll(".scene");
 
     scenes.forEach(scene => {{
-
-        scene.classList.remove(
-            "active"
-        );
-
+        scene.classList.remove("active");
     }});
 
-    const target =
-        document.getElementById(
-            "scene" + number
-        );
+    const target = document.getElementById("scene" + number);
 
-    if (!target)
+    if (!target) {{
+        console.error("Сцена не найдена: scene" + number);
         return;
+    }}
 
-    target.classList.add(
-        "active"
-    );
+    target.classList.add("active");
 
-    currentScene =
-        number;
+    currentScene = number;
 
     /*
      * Фото читается только здесь.
      */
 
-    if (
-        number >= 2 &&
-        number <= 11
-    ) {{
-
+    if (number >= 2 && number <= 11) {{
         loadPhoto(number);
-
     }}
 
     if (number === 15) {{
@@ -2578,15 +2554,8 @@ function nextScene(event) {{
         event.stopPropagation();
     }}
 
-    if (
-        currentScene >= 1 &&
-        currentScene < 14
-    ) {{
-
-        setScene(
-            currentScene + 1
-        );
-
+    if (currentScene >= 1 && currentScene < 14) {{
+        setScene(currentScene + 1);
     }}
 }}
 
@@ -3094,8 +3063,7 @@ document.addEventListener(
 """
 
 
-components.html(
+st.iframe(
     html,
-    height=900,
-    scrolling=False
+    height=900
 )
