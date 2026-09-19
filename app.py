@@ -3060,5 +3060,5 @@ if music_b64:
     html = html.replace("__MUSIC__", "data:audio/mpeg;base64," + music_b64)
 else:
     html = html.replace("__MUSIC__", "")
-
+st.write("HAS BASE64:", "data:image/jpeg" in html)
 components.html(html, height=900, scrolling=False)
