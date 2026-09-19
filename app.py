@@ -110,17 +110,7 @@ def file_to_base64(filename):
 
 
 music = file_to_base64("romantic.mp3")
-# =========================================
-# ФОТОГРАФИИ — BASE64
-# =========================================
 
-photos = {}
-
-for i in range(1, 11):
-    filename = f"photo{i}.jpg"
-    photos[i] = file_to_base64(
-        os.path.join("static", filename)
-    )
 
 # =========================================
 # HTML
@@ -1877,6 +1867,8 @@ button {{
                     Просто быть рядом.
                 </div>
 
+            </div>
+
         </div>
 
     </div>
@@ -2292,22 +2284,10 @@ let questIndex = 0;
  * когда нужная сцена открывается.
  */
 
-function getPhotoData(filename) {{
+function getPhotoUrl(filename) {{
 
-    const photos = {{
-        "photo1.jpg": "data:image/jpeg;base64,{photos[1]}",
-        "photo2.jpg": "data:image/jpeg;base64,{photos[2]}",
-        "photo3.jpg": "data:image/jpeg;base64,{photos[3]}",
-        "photo4.jpg": "data:image/jpeg;base64,{photos[4]}",
-        "photo5.jpg": "data:image/jpeg;base64,{photos[5]}",
-        "photo6.jpg": "data:image/jpeg;base64,{photos[6]}",
-        "photo7.jpg": "data:image/jpeg;base64,{photos[7]}",
-        "photo8.jpg": "data:image/jpeg;base64,{photos[8]}",
-        "photo9.jpg": "data:image/jpeg;base64,{photos[9]}",
-        "photo10.jpg": "data:image/jpeg;base64,{photos[10]}"
-    }};
+    return "https://raw.githubusercontent.com/infiniti-proger/da/main/static/" + filename;
 
-    return photos[filename] || "";
 }}
 
 
@@ -2322,7 +2302,9 @@ function loadPhoto(sceneNumber) {{
         return;
 
     const image =
-        scene.querySelector(".photo");
+        scene.querySelector(
+            ".photo"
+        );
 
     if (!image)
         return;
@@ -2333,23 +2315,25 @@ function loadPhoto(sceneNumber) {{
     if (!filename)
         return;
 
+    /*
+     * Если эта фотография уже была загружена,
+     * повторно ничего не делаем.
+     */
+
     if (image.dataset.loaded === "1")
         return;
 
-    const photoData =
-        getPhotoData(filename);
-
-    if (!photoData) {{
-        console.error(
-            "Фото не найдено:",
-            filename
-        );
-        return;
-    }}
-
-    image.src = photoData;
-
     image.dataset.loaded = "1";
+
+    image.src =
+        getPhotoUrl(filename);
+
+    /*
+     * Следующую фотографию начинаем грузить
+     * заранее после открытия текущей.
+     *
+     * Это НЕ происходит при старте сайта.
+     */
 
     const nextSceneNumber =
         sceneNumber + 1;
@@ -2382,7 +2366,9 @@ function preloadSinglePhoto(sceneNumber) {{
         return;
 
     const image =
-        scene.querySelector(".photo");
+        scene.querySelector(
+            ".photo"
+        );
 
     if (!image)
         return;
@@ -2396,11 +2382,9 @@ function preloadSinglePhoto(sceneNumber) {{
     if (!filename)
         return;
 
-    const photoData =
-        getPhotoData(filename);
-
-    if (!photoData)
-        return;
+    /*
+     * Здесь уже можно загрузить следующее фото.
+     */
 
     const preload =
         new Image();
@@ -2408,7 +2392,8 @@ function preloadSinglePhoto(sceneNumber) {{
     preload.decoding = "async";
 
     preload.src =
-        photoData;
+        getPhotoUrl(filename);
+
 }}
 
 
