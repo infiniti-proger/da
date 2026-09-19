@@ -1,5 +1,4 @@
 import streamlit as st
-import streamlit.components.v1 as components
 import base64
 import os
 
@@ -110,22 +109,6 @@ def file_to_base64(filename):
 
 
 music = file_to_base64("romantic.mp3")
-music_b64 = music
-
-photos_b64 = {}
-for i in range(1, 11):
-    for ext in ("jpg", "JPG", "jpeg", "JPEG", "png", "PNG"):
-        p = f"static/photo{i}.{ext}"
-        if os.path.exists(p):
-            with open(p, "rb") as f:
-                photos_b64[i] = base64.b64encode(f.read()).decode("utf-8")
-            break
-
-
-def ph(n):
-    if n in photos_b64:
-        return "data:image/jpeg;base64," + photos_b64[n]
-    return ""
 
 
 # =========================================
@@ -1605,7 +1588,11 @@ button {{
 
         <div class="photo-wrapper">
 
-           <img class="photo" src="__PHOTO_1__" alt="">
+            <img
+                class="photo"
+                data-photo="photo1.jpg"
+                alt="Наш момент"
+                decoding="async">
 
             <div class="photo-caption">
 
@@ -1643,7 +1630,11 @@ button {{
 
         <div class="photo-wrapper">
 
- <img class="photo" src="__PHOTO_2__" alt="">
+            <img
+                class="photo"
+                data-photo="photo2.jpg"
+                alt="Наш момент"
+                decoding="async">
 
             <div class="photo-caption">
 
@@ -1681,7 +1672,11 @@ button {{
 
         <div class="photo-wrapper">
 
-<img class="photo" src="__PHOTO_3__" alt="">
+            <img
+                class="photo"
+                data-photo="photo3.jpg"
+                alt="Наш момент"
+                decoding="async">
 
             <div class="photo-caption">
 
@@ -1720,7 +1715,11 @@ button {{
 
         <div class="photo-wrapper">
 
-          <img class="photo" src="__PHOTO_4__" alt="">
+            <img
+                class="photo"
+                data-photo="photo4.jpg"
+                alt="Наш момент"
+                decoding="async">
 
             <div class="photo-caption">
 
@@ -1759,7 +1758,11 @@ button {{
 
         <div class="photo-wrapper">
 
-         <img class="photo" src="__PHOTO_5__" alt="">
+            <img
+                class="photo"
+                data-photo="photo5.jpg"
+                alt="Наш момент"
+                decoding="async">
 
             <div class="photo-caption">
 
@@ -1795,7 +1798,11 @@ button {{
 
         <div class="photo-wrapper">
 
-       <img class="photo" src="__PHOTO_6__" alt="">
+            <img
+                class="photo"
+                data-photo="photo6.jpg"
+                alt="Наш момент"
+                decoding="async">
 
             <div class="photo-caption">
 
@@ -1826,17 +1833,45 @@ button {{
      8. PHOTO 7
 ================================= -->
 
-<section class="scene photo-scene" id="scene8">
+<section class="scene photo-scene"
+         id="scene8">
+
     <div class="scene-inner">
+
         <div class="photo-wrapper">
-            <img class="photo" src="__PHOTO_7__" alt="">
-            <div class="photo-caption">
-                <div class="photo-number">07 / 10</div>
-                <div class="photo-title">Счастье в мелочах</div>
-                <div class="photo-text">Иногда для счастья нужно совсем немного. Просто быть рядом.</div>
+
+            <div class="photo-wrapper">
+
+                <img
+                    class="photo"
+                    data-photo="photo7.jpg"
+                    alt="Наш момент"
+                    decoding="async">
+
             </div>
+
+            <div class="photo-caption">
+
+                <div class="photo-number">
+                    07 / 10
+                </div>
+
+                <div class="photo-title">
+                    Счастье в мелочах
+                </div>
+
+                <div class="photo-text">
+                    Иногда для счастья нужно
+                    совсем немного.
+                    Просто быть рядом.
+                </div>
+
+            </div>
+
         </div>
+
     </div>
+
 </section>
 
 
@@ -1851,7 +1886,11 @@ button {{
 
         <div class="photo-wrapper">
 
-<img class="photo" src="__PHOTO_8__" alt="">
+            <img
+                class="photo"
+                data-photo="photo8.jpg"
+                alt="Наш момент"
+                decoding="async">
 
             <div class="photo-caption">
 
@@ -1888,7 +1927,11 @@ button {{
 
         <div class="photo-wrapper">
 
-<img class="photo" src="__PHOTO_9__" alt="">
+            <img
+                class="photo"
+                data-photo="photo9.jpg"
+                alt="Наш момент"
+                decoding="async">
 
             <div class="photo-caption">
 
@@ -1924,7 +1967,12 @@ button {{
     <div class="scene-inner">
 
         <div class="photo-wrapper">
-<img class="photo" src="__PHOTO_10__" alt="">
+
+            <img
+                class="photo"
+                data-photo="photo10.jpg"
+                alt="Наш момент"
+                decoding="async">
 
             <div class="photo-caption">
 
@@ -2133,8 +2181,9 @@ button {{
        preload="auto">
 
     <source
-    src="__MUSIC__"
-    type="audio/mpeg">
+        src="data:audio/mpeg;base64,{music}"
+        type="audio/mpeg">
+
 </audio>
 
 
@@ -2228,6 +2277,7 @@ let questIndex = 0;
  *
  * У каждой картинки есть только:
  *
+ * data-photo="photo1.jpg"
  *
  * Настоящий src появляется только
  * когда нужная сцена открывается.
@@ -2235,7 +2285,13 @@ let questIndex = 0;
 
 function getPhotoUrl(filename) {{
 
-    return "/app/static/" + filename;
+    const path = "/app/static/" + encodeURIComponent(filename);
+
+    try {{
+        return new URL(path, window.parent.location.origin).href;
+    }} catch (e) {{
+        return new URL(path, document.referrer || window.location.href).href;
+    }}
 
 }}
 
@@ -3043,22 +3099,7 @@ document.addEventListener(
 """
 
 
-# Подставляем фото 1..10
-html = html.replace("__PHOTO_1__",  ph(1))
-html = html.replace("__PHOTO_2__",  ph(2))
-html = html.replace("__PHOTO_3__",  ph(3))
-html = html.replace("__PHOTO_4__",  ph(4))
-html = html.replace("__PHOTO_5__",  ph(5))
-html = html.replace("__PHOTO_6__",  ph(6))
-html = html.replace("__PHOTO_7__",  ph(7))
-html = html.replace("__PHOTO_8__",  ph(8))
-html = html.replace("__PHOTO_9__",  ph(9))
-html = html.replace("__PHOTO_10__", ph(10))
-
-# Подставляем музыку
-if music_b64:
-    html = html.replace("__MUSIC__", "data:audio/mpeg;base64," + music_b64)
-else:
-    html = html.replace("__MUSIC__", "")
-st.write("HAS BASE64:", "data:image/jpeg" in html)
-components.html(html, height=900, scrolling=False)
+st.iframe(
+    html,
+    height=900
+)
