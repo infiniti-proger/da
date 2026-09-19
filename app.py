@@ -479,4 +479,9 @@ if music_b64:
 else:
     html = html.replace("__MUSIC__", "")
 
-components.html(html, height=900, scrolling=False)
+import streamlit as st
+
+if hasattr(st, "iframe"):
+    st.iframe(html, height=900)
+else:
+    components.html(html, height=900, scrolling=False)
