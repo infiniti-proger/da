@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 import base64
 import os
 
@@ -1838,39 +1839,33 @@ button {{
 
     <div class="scene-inner">
 
-        <div class="photo-wrapper">
+<div class="photo-wrapper">
 
-            <div class="photo-wrapper">
+    <img
+        class="photo"
+        data-photo="photo7.jpg"
+        alt="Наш момент"
+        decoding="async">
 
-                <img
-                    class="photo"
-                    data-photo="photo7.jpg"
-                    alt="Наш момент"
-                    decoding="async">
+    <div class="photo-caption">
 
-            </div>
+        <div class="photo-number">
+            07 / 10
+        </div>
 
-            <div class="photo-caption">
+        <div class="photo-title">
+            Счастье в мелочах
+        </div>
 
-                <div class="photo-number">
-                    07 / 10
-                </div>
-
-                <div class="photo-title">
-                    Счастье в мелочах
-                </div>
-
-                <div class="photo-text">
-                    Иногда для счастья нужно
-                    совсем немного.
-                    Просто быть рядом.
-                </div>
-
-            </div>
-
+        <div class="photo-text">
+            Иногда для счастья нужно
+            совсем немного.
+            Просто быть рядом.
         </div>
 
     </div>
+
+</div>
 
 </section>
 
@@ -2283,15 +2278,9 @@ let questIndex = 0;
  * когда нужная сцена открывается.
  */
 
-function getPhotoUrl(filename) {{
+# function getPhotoUrl(filename) {{
 
-    const path = "/app/static/" + encodeURIComponent(filename);
-
-    try {{
-        return new URL(path, window.parent.location.origin).href;
-    }} catch (e) {{
-        return new URL(path, document.referrer || window.location.href).href;
-    }}
+    return "/app/static/" + encodeURIComponent(filename);
 
 }}
 
@@ -3099,7 +3088,8 @@ document.addEventListener(
 """
 
 
-st.iframe(
+components.html(
     html,
-    height=900
+    height=900,
+    scrolling=False
 )
