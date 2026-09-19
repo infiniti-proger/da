@@ -1836,7 +1836,6 @@ button {{
                 <div class="photo-text">Иногда для счастья нужно совсем немного. Просто быть рядом.</div>
             </div>
         </div>
-    </div>
 </section>
 
 
